@@ -225,9 +225,84 @@ public class Game {
 		 */
 		double seuil=this.epsilon*(1-this.epsilon)/(2*this.gamma);
 		double variation=this.terrain.get_variation_potentiel();//la norme de la différence entre les états de chaque génération
-		int nb_iterations=0;
-		while(variation>seuil && nb_iterations<10){
+		int nb_iterations=0;//juste pour éviter la boucle infinie...
+		while(variation>seuil && nb_iterations<100){
 			nb_iterations++;
+			for(int i=0; i<this.terrain.getCases().size(); i++){
+				//On calcule ce que rapporte chaque action (haut, bas, gauche, droite)
+				//en haut
+				double Vhaut=0;
+				if(i<this.terrain.getCases().size()-this.terrain.getLength()){//si i n'est pas sur la derinère ligne
+					double proba_haut=0.8;
+					if(i%this.terrain.getLength()!=this.terrain.getLength()-1){//si il a une case en haut à droite
+						Vhaut += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_haut+=0.1;
+					}
+					if(i%this.terrain.getLength()!=0){//si il a une case en haut à gauche
+						Vhaut += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_haut+=0.1;
+					}
+					Vhaut += proba_haut * this.terrain.getCases().get(i+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+this.terrain.getLength()).getEstim_value().size()-1);
+					Vhaut=this.getGamma()*Vhaut;
+				}
+				//en bas
+				double Vbas=0;
+				if(i>=this.terrain.getLength()){//si i n'est pas sur la première ligne
+					double proba_bas=0.8;
+					if(i%this.terrain.getLength()!=this.terrain.getLength()-1){//si il a une case en bas à droite
+						Vbas += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_bas+=0.1;
+					}
+					if(i%this.terrain.getLength()!=0){//si il a une case en bas à gauche
+						Vbas += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_bas+=0.1;
+					}
+					Vbas += proba_bas * this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().size()-1);
+					Vbas=this.getGamma()*Vbas;
+				}
+				//à gauche
+				double Vgauche=0;
+				if(i>=this.terrain.getLength()){//si i n'est pas sur la première ligne
+					double proba_gauche=0.8;
+					if(i%this.terrain.getLength()!=this.terrain.getLength()-1){//si il a une case en bas à droite
+						Vgauche += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_gauche+=0.1;
+					}
+					if(i%this.terrain.getLength()!=0){//si il a une case en bas à gauche
+						Vgauche += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_gauche+=0.1;
+					}
+					Vgauche += proba_gauche * this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().size()-1);
+					Vgauche=this.getGamma()*Vgauche;
+				}
+				//à droite
+				double Vdroite=0;
+				if(i>=this.terrain.getLength()){//si i n'est pas sur la première ligne
+					double proba_droite=0.8;
+					if(i%this.terrain.getLength()!=this.terrain.getLength()-1){//si il a une case en bas à droite
+						Vdroite += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_droite+=0.1;
+					}
+					if(i%this.terrain.getLength()!=0){//si il a une case en bas à gauche
+						Vdroite += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().size()-1);
+					}else{
+						proba_droite+=0.1;
+					}
+					Vdroite += proba_droite * this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().size()-1);
+					Vdroite=this.getGamma()*Vdroite;
+				}
+				
+				//on fait le max de chaque action.
+				double Vtemp=this.terrain.getCases().get(i).getCase_value() + Math.max(Math.max(Vhaut, Vbas), Math.max(Vgauche, Vdroite));
+				this.terrain.getCases().get(i).getEstim_value().add(Vtemp);
+			}
 		}
 		
 	}

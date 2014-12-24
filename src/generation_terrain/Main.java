@@ -25,13 +25,17 @@ public class Main {
 		//On vérifie que ces points sont bien sur le terrain
 		game.check_departure();
 		game.check_arrival();
-		
+		System.out.println(cases.get(13).toString());
 		game.valueIteration();
 		
 		//on affiche les valeurs de V1 parce que sinon ça craint un peu 
 		for(int i=0; i<game.getTerrain().getCases().size(); i++){
-			System.out.println("case " + i + " : " + game.getTerrain().getCases().get(i).estim_value.get(1));
+			System.out.println("case " + i + " : " + game.getTerrain().getCases().get(i).estim_value.get(1) + " -> " + game.getTerrain().getCases().get(i).estim_value.get(2) + " -> " + game.getTerrain().getCases().get(i).estim_value.get(3) + " -> " + game.getTerrain().getCases().get(i).estim_value.get(4) + " -> " + game.getTerrain().getCases().get(i).estim_value.get(5) + " -> " + game.getTerrain().getCases().get(i).estim_value.get(6));
 		}
 		
+		//on affiche les valeurs de V1 parce que sinon ça craint un peu 
+		for(int i=0; i<game.getTerrain().getCases().size(); i++){
+			System.out.println("case " + i + " : " + game.getTerrain().getCases().get(i).estim_value.get(100));
+		}
 	}
 }

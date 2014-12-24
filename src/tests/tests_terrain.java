@@ -83,5 +83,18 @@ public class tests_terrain {
 		assertTrue(!terrain.getCases().get(0).isLeft() && !terrain.getCases().get(5).isLeft() && !terrain.getCases().get(10).isLeft());
 	}
 	
+	@Test
+	public void test_directions_from_middle(){//juste pur vérifier qu'une case du milieu peut aller dans les 4 directions. On ne sait jamais^^
+		ArrayList<Case> cases = new ArrayList<Case>();
+		//cases doit être peuplée maintenant
+		for(int i=0; i<15; i++){
+			cases.add(new Case());
+		}
+		Terrain terrain = new Terrain(5, 3, cases);
+		terrain.check_directions();//il doit ne doit pas tomber par-dessus bord
+		Case middle=terrain.getCases().get(0);
+		assertTrue(middle.isDown() && middle.isLeft() && middle.isRight() && middle.isUp());
+	}
+	
 
 }
