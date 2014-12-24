@@ -1,0 +1,37 @@
+package generation_terrain;
+
+import java.util.ArrayList;
+
+public class Main {
+
+	public static void main(String[] args){
+		ArrayList<Case> cases = new ArrayList<Case>();
+		//cases doit être peuplée maintenant
+		for(int i=0; i<15; i++){
+			cases.add(new Case());
+		}
+		//on en déclare certaines comme marécage (-1), et on donne une récompense à l'arrivée (5)
+		cases.get(14).setCase_value(5);
+		cases.get(4).setCase_value(-1);
+		cases.get(7).setCase_value(-1);
+		cases.get(8).setCase_value(-1);
+		cases.get(9).setCase_value(-1);
+		
+		Terrain terrain = new Terrain(5, 3, cases);
+		terrain.complete_cases();
+		terrain.check_directions();
+		//on va de (0,0) à (4,2)
+		Game game = new Game(0.9, 0.01, 0, 0, 4, 2, terrain);
+		//On vérifie que ces points sont bien sur le terrain
+		game.check_departure();
+		game.check_arrival();
+		
+		game.valueIteration();
+		
+		//on affiche les valeurs de V1 parce que sinon ça craint un peu 
+		for(int i=0; i<game.getTerrain().getCases().size(); i++){
+			System.out.println("case " + i + " : " + game.getTerrain().getCases().get(i).estim_value.get(1));
+		}
+		
+	}
+}
