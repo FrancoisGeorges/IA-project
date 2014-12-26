@@ -12,6 +12,22 @@ import org.junit.Test;
 public class tests_terrain {
 	
 	@Test
+	public void test_get_variation_potentiel(){//teste la norme de le différence entre les deux dernières valeurs des V
+		ArrayList<Case> cases = new ArrayList<Case>();
+		//cases doit être peuplée maintenant
+		for(int i=0; i<6; i++){
+			cases.add(new Case());
+		}		
+		Terrain terrain = new Terrain(3, 2, cases);
+		for(int i=0; i<6; i++){
+			cases.get(i).getEstim_value().add(0.0);
+			cases.get(i).getEstim_value().add((double) i);
+			cases.get(i).getEstim_value().add((double) 6);
+		}
+		assertTrue(terrain.get_variation_potentiel()==Math.sqrt(91));
+	}
+	
+	@Test
 	public void test_dimensions_too_few(){//quand on n'a pas assez de cases par-rapport à la dimension de l'espace
 		ArrayList<Case> cases = new ArrayList<Case>();
 		//cases doit être peuplée maintenant
@@ -92,7 +108,7 @@ public class tests_terrain {
 		}
 		Terrain terrain = new Terrain(5, 3, cases);
 		terrain.check_directions();//il doit ne doit pas tomber par-dessus bord
-		Case middle=terrain.getCases().get(0);
+		Case middle=terrain.getCases().get(6);
 		assertTrue(middle.isDown() && middle.isLeft() && middle.isRight() && middle.isUp());
 	}
 	

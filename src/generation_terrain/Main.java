@@ -1,5 +1,7 @@
 package generation_terrain;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -35,7 +37,12 @@ public class Main {
 		
 		//on affiche les valeurs de V1 parce que sinon ça craint un peu 
 		for(int i=0; i<game.getTerrain().getCases().size(); i++){
-			System.out.println("case " + i + " : " + game.getTerrain().getCases().get(i).estim_value.get(100));
+			System.out.println("case " + i + " : " + game.getTerrain().getCases().get(i).estim_value.get(game.getTerrain().getCases().get(i).estim_value.size()-1));
 		}
+	
+		
+		//on affiche le nombre d'itérations, juste pour vérifier la convergence
+		System.out.println("nombre total d'itérations : " + game.getTerrain().getCases().get(0).estim_value.size());
+		
 	}
 }

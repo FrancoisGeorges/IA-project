@@ -10,8 +10,22 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 public class tests_game {
-
 	@Test
+	public void test_small_linear_terrain(){//dans le cas où notre terrain est une bande de terre de dimension (1, 3)
+		ArrayList<Case> cases = new ArrayList<Case>();
+		for(int i=0; i<3; i++){
+			cases.add(new Case());
+		}
+		cases.get(2).setCase_value(5);
+		Terrain terrain = new Terrain(1, 3, cases);
+		//on va de (0,0) à (4,2)
+		Game game = new Game(0.9, 0.01, 0, 0, 0, 2, terrain);
+		//On vérifie que ces points sont bien sur le terrain
+		game.valueIteration();//on lance l'algorithme bourrin
+		assertTrue(game.getTerrain().getCases().get(0).getEstim_value().size()<40);//il ne faut pas beaucoup d'itérations ici
+	}
+	
+	/*@Test
 	public void test_first_generation(){//on teste les valeurs de V0
 		ArrayList<Case> cases = new ArrayList<Case>();
 		//cases doit être peuplée maintenant
@@ -63,7 +77,7 @@ public class tests_game {
 			}
 		}
 		assertTrue(difference_is_low);
-	}
+	}*/
 	
 	@Test
 	public void test_depart_dimensions(){//quand on a pas assez de cases par-rapport à la dimension de l'espace
