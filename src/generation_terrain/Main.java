@@ -4,6 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+/**
+ * @author François
+ *
+ */
 public class Main {
 
 	public static void main(String[] args){
@@ -27,7 +31,6 @@ public class Main {
 		//On vérifie que ces points sont bien sur le terrain
 		game.check_departure();
 		game.check_arrival();
-		System.out.println(cases.get(13).toString());
 		game.valueIteration();
 		
 		//on affiche les valeurs de V1 parce que sinon ça craint un peu 

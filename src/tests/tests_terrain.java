@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+/**
+ * @author François
+ *
+ */
 public class tests_terrain {
 	
 	@Test

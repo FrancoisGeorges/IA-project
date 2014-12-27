@@ -2,6 +2,10 @@ package generation_terrain;
 
 import java.util.ArrayList;
 
+/**
+ * @author François
+ *
+ */
 public class Terrain {
 	public int length, width;//les dimensions du terrain
 	public ArrayList<Case> cases;//les cases du terrain

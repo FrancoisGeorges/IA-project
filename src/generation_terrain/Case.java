@@ -2,6 +2,10 @@ package generation_terrain;
 
 import java.util.ArrayList;
 
+/**
+ * @author François
+ *
+ */
 public class Case {
 	public int case_value;//la valeur de la case (ex: -1 si marécage, 0 sinon)
 	public boolean up, down, left, right;//true ssi la direction est possible depuis cette case
