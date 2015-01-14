@@ -15,7 +15,7 @@ public class OptimizedMap {
 		for(int i=0; i<this.game.getTerrain().getCases().size(); i++){//pour chaque case
 			Case c = this.game.getTerrain().getCases().get(i);
 			String best_direction="";
-			double value_best_direction=-10000000;
+			double value_best_direction=-Integer.MAX_VALUE;
 			if(c.isRight()){//si il y a une case à droite
 				double right_value=this.game.getTerrain().getCases().get(i+1).getEstim_value().get(c.getEstim_value().size()-1);
 				if(right_value > value_best_direction){//si c'est plus intéressant à droite

@@ -47,5 +47,9 @@ public class Main {
 		//on affiche le nombre d'itérations, juste pour vérifier la convergence
 		System.out.println("nombre total d'itérations : " + game.getTerrain().getCases().get(0).estim_value.size());
 		
+		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
+		map.generate_directions();
+		System.out.println(map.getDirections().toString());
+		
 	}
 }

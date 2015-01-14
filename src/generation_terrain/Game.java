@@ -260,6 +260,8 @@ public class Game {
 		double variation=this.terrain.get_variation_potentiel();//la norme de la différence entre les états de chaque génération
 		while(variation>seuil){
 			for(int i=0; i<this.terrain.getCases().size(); i++){
+				//le nombre d'itérations effectuées (y compris celle-là)
+				int nb_iterations = this.terrain.getCases().get(i).getEstim_value().size()-1;
 				//On calcule ce que rapporte chaque action (haut, bas, gauche, droite)
 				//en haut
 				double Vhaut=0;
@@ -267,18 +269,18 @@ public class Game {
 				if(this.terrain.getCases().get(i).isUp()){//si i n'est pas sur la dernière ligne
 					double proba_haut=0.8;
 					if(this.terrain.getCases().get(i).isRight()){//si il a une case en haut à droite
-						Vhaut += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().size()-1);
+						Vhaut += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_up += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getCase_value();
 					}else{
 						proba_haut+=0.1;
 					}
 					if(this.terrain.getCases().get(i).isLeft()){//si il a une case en haut à gauche
-						Vhaut += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().size()-1);
+						Vhaut += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_up += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getCase_value();
 					}else{
 						proba_haut+=0.1;
 					}
-					Vhaut += proba_haut * this.terrain.getCases().get(i+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+this.terrain.getLength()).getEstim_value().size()-1);
+					Vhaut += proba_haut * this.terrain.getCases().get(i+this.terrain.getLength()).getEstim_value().get(nb_iterations);
 					cost_up += 0.1 * this.terrain.getCases().get(i+this.terrain.getLength()).getCase_value();
 					Vhaut=this.getGamma()*Vhaut;
 				}
@@ -288,18 +290,18 @@ public class Game {
 				if(this.terrain.getCases().get(i).isDown()){//si i n'est pas sur la première ligne
 					double proba_bas=0.8;
 					if(this.terrain.getCases().get(i).isRight()){//si il a une case en bas à droite
-						Vbas += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().size()-1);
+						Vbas += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_down += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getCase_value();
 					}else{
 						proba_bas+=0.1;
 					}
 					if(this.terrain.getCases().get(i).isLeft()){//si il a une case en bas à gauche
-						Vbas += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().size()-1);
+						Vbas += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_down += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getCase_value();
 					}else{
 						proba_bas+=0.1;
 					}
-					Vbas += proba_bas * this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().size()-1);
+					Vbas += proba_bas * this.terrain.getCases().get(i-this.terrain.getLength()).getEstim_value().get(nb_iterations);
 					cost_down += 0.1 * this.terrain.getCases().get(i-this.terrain.getLength()).getCase_value();
 					Vbas=this.getGamma()*Vbas;
 				}
@@ -309,18 +311,18 @@ public class Game {
 				if(this.terrain.getCases().get(i).isLeft()){//si i n'est pas sur la première colonne
 					double proba_gauche=0.8;
 					if(this.terrain.getCases().get(i).isDown()){//si il a une case en bas à gauche
-						Vgauche += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().size()-1);
+						Vgauche += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_left += 0.1 * this.terrain.getCases().get(i-1-this.terrain.getLength()).getCase_value();
 					}else{
 						proba_gauche+=0.1;
 					}
 					if(this.terrain.getCases().get(i).isUp()){//si il a une case en haut à gauche
-						Vgauche += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().size()-1);
+						Vgauche += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_left += 0.1 * this.terrain.getCases().get(i-1+this.terrain.getLength()).getCase_value();
 					}else{
 						proba_gauche+=0.1;
 					}
-					Vgauche += proba_gauche * this.terrain.getCases().get(i-1).getEstim_value().get(this.terrain.getCases().get(i-1).getEstim_value().size()-1);
+					Vgauche += proba_gauche * this.terrain.getCases().get(i-1).getEstim_value().get(nb_iterations);
 					cost_left += 0.1 * this.terrain.getCases().get(i-1).getCase_value();
 					Vgauche=this.getGamma()*Vgauche;
 				}
@@ -330,25 +332,25 @@ public class Game {
 				if(this.terrain.getCases().get(i).isRight()){//si i n'est pas sur la dernière colonne
 					double proba_droite=0.8;
 					if(this.terrain.getCases().get(i).isDown()){//si il a une case en bas à droite
-						Vdroite += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().size()-1);
+						Vdroite += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_right += 0.1 * this.terrain.getCases().get(i+1-this.terrain.getLength()).getCase_value();
 					}else{
 						proba_droite+=0.1;
 					}
 					if(this.terrain.getCases().get(i).isUp()){//si il a une case en haut à droite
-						Vdroite += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().get(this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().size()-1);
+						Vdroite += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getEstim_value().get(nb_iterations);
 						cost_right += 0.1 * this.terrain.getCases().get(i+1+this.terrain.getLength()).getCase_value();
 					}else{
 						proba_droite+=0.1;
 					}
-					Vdroite += proba_droite * this.terrain.getCases().get(i+1).getEstim_value().get(this.terrain.getCases().get(i+1).getEstim_value().size()-1);
+					Vdroite += proba_droite * this.terrain.getCases().get(i+1).getEstim_value().get(nb_iterations);
 					cost_right += 0.1 * this.terrain.getCases().get(i+1).getCase_value();
 					Vdroite=this.getGamma()*Vdroite;
 				}
 				
 				//on fait le max de chaque action.
 				double Vtemp=Math.max(Math.max(cost_up + Vhaut, cost_down + Vbas), Math.max(cost_left + Vgauche, cost_right + Vdroite));
-				this.terrain.getCases().get(i).getEstim_value().add(Vtemp + this.terrain.getCases().get(i).getCase_value());
+				this.terrain.getCases().get(i).getEstim_value().add(this.getGamma()*Vtemp + this.terrain.getCases().get(i).getCase_value());
 			}
 			variation=this.terrain.get_variation_potentiel();
 		}
