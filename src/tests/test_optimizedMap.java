@@ -12,11 +12,11 @@ public class test_optimizedMap {
 	@Test
 	public void test_2x2() {
 		ArrayList<Case> cases = new ArrayList<Case>();
-		//cases doit être peuplée maintenant
+		// boxes must be populated now
 		for(int i=0; i<4; i++){
 			cases.add(new Case());
 		}
-		//on en déclare certaines comme marécage (-1), et on donne une récompense à l'arrivée (5)
+		// we declare some boxes like "marecage"/swamp (-1), and we give a reward to the arrival (5)
 		cases.get(3).setCase_value(5);
 		cases.get(1).setCase_value(-1);
 		cases.get(3).setDown(false);
@@ -27,15 +27,15 @@ public class test_optimizedMap {
 		Terrain terrain = new Terrain(2, 2, cases);
 		terrain.complete_cases();
 		terrain.check_directions();
-		//une fois arrivé, il ne bouge plus
+		// when arrived, it can't move anymore
 		
-		//on va de (0,0) à (2,1)
+		// we go from (0,0) to (2,1)
 		Game game = new Game(0.9, 0.01, 0, 0, 1, 1, terrain);
 
 		game.valueIteration();
 		
 		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
-		map.generate_directions();//l'attribut directions est maintenant rempli (normalement^^)
+		map.generate_directions();// the directions attribute is now defined (if all worked well ^^)
 		ArrayList<String> expected_directions = new ArrayList<String>();
 		expected_directions.add("up");
 		expected_directions.add("up");
@@ -52,11 +52,11 @@ public class test_optimizedMap {
 	@Test
 	public void test_3x2() {
 		ArrayList<Case> cases = new ArrayList<Case>();
-		//cases doit être peuplée maintenant
+		// boxes must be populated now
 		for(int i=0; i<6; i++){
 			cases.add(new Case());
 		}
-		//on en déclare certaines comme marécage (-1), et on donne une récompense à l'arrivée (5)
+		// we declare some boxes like marecage (-1), and we give a reward to the arrival (5)
 		cases.get(5).setCase_value(5);
 		cases.get(1).setCase_value(-1);
 		cases.get(2).setCase_value(-1);
@@ -69,13 +69,13 @@ public class test_optimizedMap {
 		terrain.complete_cases();
 		terrain.check_directions();
 		
-		//on va de (0,0) à (2,1)
+		// we go from (0,0) to (2,1)
 		Game game = new Game(0.9, 0.01, 0, 0, 1, 1, terrain);
 		//System.out.println(game.getTerrain().getCases().get(5).toString());
 		game.valueIteration();
 		
 		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
-		map.generate_directions();//l'attribut directions est maintenant rempli (normalement^^)
+		map.generate_directions();// the directions attribute is now defined (if all worked well ^^)
 		ArrayList<String> expected_directions = new ArrayList<String>();
 		expected_directions.add("up");
 		expected_directions.add("up");
@@ -94,11 +94,11 @@ public class test_optimizedMap {
 	/*@Test
 	public void test_10x5() {
 		ArrayList<Case> cases = new ArrayList<Case>();
-		//cases doit être peuplée maintenant
+		// boxes must be populated now
 		for(int i=0; i<50; i++){
 			cases.add(new Case());
 		}
-		//on en déclare certaines au milieu comme marécage
+		// we declare some boxes at the center like marecage
 		for(int i=2; i<8; i++){
 			cases.get(i).setCase_value(-10);
 		}
@@ -108,12 +108,12 @@ public class test_optimizedMap {
 		terrain.complete_cases();
 		terrain.check_directions();
 		
-		//on va de (0,0) à (9,4)
+		//on va de (0,0) ï¿½ (9,4)
 		Game game = new Game(0.9, 0.01, 0, 0, 9, 4, terrain);
 		game.valueIteration();
 		
 		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
-		map.generate_directions();//l'attribut directions est maintenant rempli (normalement^^)
+		map.generate_directions();// the directions attribute is defined now (if all worked well ^^)
 		ArrayList<String> expected_directions = new ArrayList<String>();
 		expected_directions.add("up");
 		expected_directions.add("up");
@@ -135,25 +135,25 @@ public class test_optimizedMap {
 		assertTrue(true);
 	}*/
 	
-	//carte colonne
+	//column map
 	@Test
 	public void test_1x10() {
 		ArrayList<Case> cases = new ArrayList<Case>();
-		//cases doit être peuplée maintenant
+		// boxes must be populated now
 		for(int i=0; i<10; i++){
 			cases.add(new Case());
 		}
-		//on en déclare certaines au milieu comme marécage
+		// we declare some boxes at the center like marecage
 		cases.get(5).setCase_value(-3);
 		Terrain terrain = new Terrain(1, 10, cases);
 		terrain.complete_cases();
 		terrain.check_directions();
 		
-		//on va de (0,9) à (0,0)
+		// we go from (0,9) to (0,0)
 		Game game = new Game(0.9, 0.01, 0, 0, 0, 9, terrain);
 		game.valueIteration();
 		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
-		map.generate_directions();//l'attribut directions est maintenant rempli (normalement^^)
+		map.generate_directions();// the directions attribute is defined now (if all worked well ^^)
 		
 		ArrayList<String> expected_directions = new ArrayList<String>();
 		for(int i=0; i<9; i++){
@@ -166,24 +166,24 @@ public class test_optimizedMap {
 	@Test
 	public void test_2x3() {
 		ArrayList<Case> cases = new ArrayList<Case>();
-		//cases doit être peuplée maintenant
+		// boxes must be populated now
 		for(int i=0; i<6; i++){
 			cases.add(new Case());
 		}
-		//on en déclare certaines au milieu comme marécage
+		//we declare some boxes at the center like marecage
 		cases.get(2).setCase_value(-5);
 		cases.get(5).setCase_value(5);
 		Terrain terrain = new Terrain(2, 3, cases);
 		terrain.complete_cases();
 		terrain.check_directions();
 		
-		//on va de (0,9) à (0,0)
+		// we go from (0,9) to (0,0)
 		Game game = new Game(0.9, 0.01, 0, 0, 2, 0, terrain);
 		game.valueIteration();
 		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
-		map.generate_directions();//l'attribut directions est maintenant rempli (normalement^^)
+		map.generate_directions();// the directions attribute is defined now (if all worked well ^^)
 		
-		//pour celui-là, il y a deux chemins équivalents
+		// for this one, there are two equivalent ways
 		ArrayList<String> expected_directions = new ArrayList<String>();
 		expected_directions.add("right");
 		expected_directions.add("up");
