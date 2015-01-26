@@ -10,6 +10,35 @@ public class OptimizedMap {
 	public Game game;
 	public ArrayList<String> directions;
 	
+	/*
+	 *On part du départ, on affiche sa direction optimale, puis la direction de la case au bout, etc... 
+	*/
+	public ArrayList<String> getOptimizedPath(){//renvoie le chemin optimal.
+		ArrayList<String> res = new ArrayList<String>();
+		int length=this.getGame().getTerrain().getLength();
+		int index_depart=this.getGame().getX_start() + this.getGame().getY_start() * length;
+		int index_arrivee=this.getGame().getX_end() + this.getGame().getY_end() * length;
+		int current_index=index_depart;
+		while(current_index!=index_arrivee){
+			res.add(this.getDirections().get(current_index));//la valeur de la direction de la case courante
+			//on met à jour current_index.
+			if(this.getDirections().get(current_index).equals("right")){//si on va à droite
+				current_index++;
+			}else if(this.getDirections().get(current_index).equals("left")){//si on va à gauche
+				current_index--;
+			}else if(this.getDirections().get(current_index).equals("up")){//si on va en haut
+				current_index+=length;
+			}else if(this.getDirections().get(current_index).equals("down")){//si on va en bas
+				current_index-=length;
+			}else if(this.getDirections().get(current_index).equals("arrival")){//si on est arrivé
+				return res;
+			}else{//si il fait de la merde
+				res.add("An error has occured. The robot seems to be drunk...");
+			}
+		}
+		return res;
+	}
+	
 	public void generate_directions(){//renvoie les directions optimales de chaque case
 		this.setDirections(new ArrayList<String>());//juste au cas où on appelle cette méthode plusieurs fois^^
 		for(int i=0; i<this.game.getTerrain().getCases().size(); i++){//pour chaque case

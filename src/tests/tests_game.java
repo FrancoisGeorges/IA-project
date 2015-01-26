@@ -26,8 +26,9 @@ public class tests_game {
 		//on va de (0,0) à (4,2)
 		Game game = new Game(0.9, 0.01, 0, 0, 0, 2, terrain);
 		//On vérifie que ces points sont bien sur le terrain
-		game.valueIteration();//on lance l'algorithme bourrin
-		assertTrue(game.getTerrain().getCases().get(0).getEstim_value().size()<40);//il ne faut pas beaucoup d'itérations ici
+		game.valueIteration();//on lance l'algorithme
+		System.out.println(game.getTerrain().getCases().get(0).getEstim_value().size());
+		assertTrue(game.getTerrain().getCases().get(0).getEstim_value().size()<100);//il ne faut pas beaucoup d'itérations ici
 	}
 	
 	@Test

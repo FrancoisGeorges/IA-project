@@ -49,7 +49,7 @@ public class Main {
 		
 		OptimizedMap map = new OptimizedMap(game, new ArrayList<String>());
 		map.generate_directions();
-		System.out.println(map.getDirections().toString());
+		System.out.println(map.getOptimizedPath().toString());
 		
 	}
 }
